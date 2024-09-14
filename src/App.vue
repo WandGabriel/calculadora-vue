@@ -1,47 +1,64 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { reactive } from 'vue';
+import Formulario from './components/Formulario.vue';
+import Cabecalho from './components/Cabecalho.vue';
+
+const limparDadosInseridos = () => {
+  estado.primeiroValor = '';
+  estado.segundoValor = '';
+}
+
+const calcular = () => {  
+    switch (estado.operacaoAritmetica) {
+      case 'somar':
+        estado.resultado = parseFloat(estado.primeiroValor) + parseFloat(estado.segundoValor);
+        limparDadosInseridos();
+        break;
+      case 'subtrair':
+        estado.resultado = parseFloat(estado.primeiroValor) - parseFloat(estado.segundoValor);
+        limparDadosInseridos();
+        break;
+      case 'multiplicar':
+        estado.resultado = parseFloat(estado.primeiroValor) * parseFloat(estado.segundoValor).toFixed(2);
+        limparDadosInseridos();
+        break;
+      case 'dividir':
+        if(estado.segundoValor != 0){
+          estado.resultado = parseFloat(estado.primeiroValor) / parseFloat(estado.segundoValor).toFixed(2);
+        } else {
+          estado.resultado = 'Divisão por zero não é permitida'
+        }
+        limparDadosInseridos();
+        break;
+      default:
+        return estado.resultado = 'Operação inválida';
+    }
+
+}
+
+const estado = reactive({
+  operacaoAritmetica: 'somar',
+  resultado: '',
+  primeiroValor: '',
+  segundoValor: '',
+})
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="container w-50">
+      <Cabecalho />
+      <Formulario :operacao-aritmetica="evento => estado.operacaoAritmetica = evento.target.value" 
+        :primeiro-valor="estado.primeiroValor"
+        :segundo-valor="estado.segundoValor"
+        :resultado="estado.resultado"
+        :edita-primeiro-valor="evento => estado.primeiroValor = evento.target.value"
+        :edita-segundo-valor="evento => estado.segundoValor = evento.target.value"
+        :calcular="calcular"/>
+  </div>
+  <br />
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
