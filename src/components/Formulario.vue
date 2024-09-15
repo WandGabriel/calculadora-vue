@@ -1,5 +1,5 @@
 <script setup>
-    const props = defineProps(['operacaoAritmetica','primeiroValor','segundoValor','resultado', 'editaPrimeiroValor','editaSegundoValor','calcular'])
+    const props = defineProps(['operacaoAritmetica','primeiroValor','segundoValor','resultado', 'editaPrimeiroValor','editaSegundoValor','calcular','limparDadosInseridos'])
 </script>
 
 <template>
@@ -11,7 +11,8 @@
           <label>Segundo número: </label>    
           <input :value="props.segundoValor" @change="editaSegundoValor" required class="form-control" type="number">
           <div class="col m-4">
-            <select @change="props.operacaoAritmetica" class="form-control text-center btn btn-warning">
+            <select @change="props.operacaoAritmetica" @click="calcular" :v-model="limparDadosInseridos" class="form-control text-center btn btn-warning">
+              <option value=""></option>
               <option value="somar">Somar</option>
               <option value="subtrair">Subtrair</option>
               <option value="multiplicar">Multipicar</option>
@@ -21,7 +22,6 @@
           <label>Resultado Final: </label>
           <br />
             <h2>{{ props.resultado }}</h2>
-          <div @click="calcular()" class="col-md- btn btn-primary mt-3 align-item-center" type="submit">Calcular</div>
       </div>    
       <div class="row">
       </div>

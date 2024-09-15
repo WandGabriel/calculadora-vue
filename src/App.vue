@@ -3,7 +3,7 @@ import { reactive } from 'vue';
 import Formulario from './components/Formulario.vue';
 import Cabecalho from './components/Cabecalho.vue';
 
-const limparDadosInseridos = () => {
+const limparDadosInseridos = () => {W
   estado.primeiroValor = '';
   estado.segundoValor = '';
 }
@@ -37,8 +37,8 @@ const calcular = () => {
 }
 
 const estado = reactive({
-  operacaoAritmetica: 'somar',
-  resultado: '',
+  operacaoAritmetica: '',
+  resultado: '0',
   primeiroValor: '',
   segundoValor: '',
 })
